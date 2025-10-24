@@ -10,8 +10,7 @@ latest_script = ""
 log_lines = []
 
 def append_log(msg):
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    entry = f"{timestamp} — {msg}"
+    entry = f"{msg}"
     log_lines.append(entry)
     if len(log_lines) > 50:
         log_lines.pop(0)
@@ -30,10 +29,8 @@ def upload_script():
         if not script:
             return jsonify({"status": "error", "message": "No script provided"})
         latest_script = script
-        append_log("New script uploaded from WebView.")
         return jsonify({"status": "success"})
     except Exception as e:
-        append_log(f"Error receiving script: {e}")
         return jsonify({"status": "error", "message": str(e)})
 
 @app.route("/current_script", methods=['GET'])
